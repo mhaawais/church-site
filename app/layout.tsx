@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   description: "Apostle Victor - Official Site for Books and Church.",
   icons: {
     icon: [
-      `/assets/logo/author-logo.jpg?v=${faviconVersion}`,
+      `/assets/logo/Author-logo.jpg?v=${faviconVersion}`,
       // "/favicon.ico",
     ],
   },
