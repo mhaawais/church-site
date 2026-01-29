@@ -8,22 +8,22 @@ import { FiBookOpen, FiArrowRight } from "react-icons/fi";
 const Hero3 = () => {
   const books = [
     {
-      src: "/assets/images/book-01.jpeg",
+      src: "/assets/images/Book-01.jpeg",
       link: "/allbooks/book1",
       buyLink: "https://www.amazon.com/Grace-Revelations-Apostle-Victor-Okonkwo/dp/B0F6G61MR3/ref=sr_1_4?crid=2HRD6VPF0U180&dib=eyJ2IjoiMSJ9.L1Rf1gaZ4IcAzbufjt9_u0W6hHnURzyVIhV79bMBZZzm6PglhpmLJRDNSG_44iTOInaOOjK2KTPLAuU0Z_jggaHjnGe34lpkpE77SDoQbpAOahL-9HUu2ekkFMi7RrRFikhI8YUwgxboldfLZVQkKilmya6lTHONIcU0qIGU6sYJsxDUGYz8XWLEUaz4cePX3VZnWseyqTXfgMgGv68wx3dlcIZXgeHwcvV6qnIspaQ.mBWhwqhZXqfCyA0Y18SgkjVnk5LCMYizZMS5G3Zzcok&dib_tag=se&keywords=the+grace+revelations&qid=1769721969&s=digital-text&sprefix=%2Cdigital-text%2C628&sr=1-4",
     },
     {
-      src: "/assets/images/book-02.jpeg",
+      src: "/assets/images/Book-02.jpeg",
       link: "/allbooks/book2",
       buyLink: "https://www.amazon.com/Grace-Revelations-Apostle-Victor-Okonkwo/dp/B0G3GQB3SJ/ref=sr_1_3?crid=2HRD6VPF0U180&dib=eyJ2IjoiMSJ9.L1Rf1gaZ4IcAzbufjt9_u0W6hHnURzyVIhV79bMBZZzm6PglhpmLJRDNSG_44iTOInaOOjK2KTPLAuU0Z_jggaHjnGe34lpkpE77SDoQbpAOahL-9HUu2ekkFMi7RrRFikhI8YUwgxboldfLZVQkKilmya6lTHONIcU0qIGU6sYJsxDUGYz8XWLEUaz4cePX3VZnWseyqTXfgMgGv68wx3dlcIZXgeHwcvV6qnIspaQ.mBWhwqhZXqfCyA0Y18SgkjVnk5LCMYizZMS5G3Zzcok&dib_tag=se&keywords=the+grace+revelations&qid=1769721969&s=digital-text&sprefix=%2Cdigital-text%2C628&sr=1-3",
     },
     {
-      src: "/assets/images/book-03.jpeg",
+      src: "/assets/images/Book-03.jpeg",
       link: "/allbooks/book3",
       buyLink: "https://www.amazon.com/Grace-Revelations-Apostle-Victor-Okonkwo/dp/B0G3GF7Z5R/ref=sr_1_2?crid=2HRD6VPF0U180&dib=eyJ2IjoiMSJ9.L1Rf1gaZ4IcAzbufjt9_u0W6hHnURzyVIhV79bMBZZzm6PglhpmLJRDNSG_44iTOInaOOjK2KTPLAuU0Z_jggaHjnGe34lpkpE77SDoQbpAOahL-9HUu2ekkFMi7RrRFikhI8YUwgxboldfLZVQkKilmya6lTHONIcU0qIGU6sYJsxDUGYz8XWLEUaz4cePX3VZnWseyqTXfgMgGv68wx3dlcIZXgeHwcvV6qnIspaQ.mBWhwqhZXqfCyA0Y18SgkjVnk5LCMYizZMS5G3Zzcok&dib_tag=se&keywords=the+grace+revelations&qid=1769721969&s=digital-text&sprefix=%2Cdigital-text%2C628&sr=1-2",
     },
     {
-      src: "/assets/images/book-04.jpeg",
+      src: "/assets/images/Book-04.jpeg",
       link: "/allbooks/book4",
       buyLink: "https://www.amazon.com/Grace-Revelations-Apostle-Victor-Okonkwo/dp/B0G3G276GT/ref=sr_1_1?crid=2HRD6VPF0U180&dib=eyJ2IjoiMSJ9.L1Rf1gaZ4IcAzbufjt9_u0W6hHnURzyVIhV79bMBZZzm6PglhpmLJRDNSG_44iTOInaOOjK2KTPLAuU0Z_jggaHjnGe34lpkpE77SDoQbpAOahL-9HUu2ekkFMi7RrRFikhI8YUwgxboldfLZVQkKilmya6lTHONIcU0qIGU6sYJsxDUGYz8XWLEUaz4cePX3VZnWseyqTXfgMgGv68wx3dlcIZXgeHwcvV6qnIspaQ.mBWhwqhZXqfCyA0Y18SgkjVnk5LCMYizZMS5G3Zzcok&dib_tag=se&keywords=the+grace+revelations&qid=1769716092&s=digital-text&sprefix=%2Cdigital-text%2C628&sr=1-1",
     },
