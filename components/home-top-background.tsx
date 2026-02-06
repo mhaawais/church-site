@@ -2,48 +2,44 @@
 
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+
+const HEADER_H = 64; // h-16 = 64px
+
+function pickSrc(w: number) {
+  if (w < 640) return "/assets/images/mobile-09.jpeg"; // mobile
+  if (w < 1024) return "/assets/images/tablet-08.jpeg"; // tablet
+  return "/assets/images/desktop-07.jpeg"; // desktop
+}
 
 export default function HomeTopBackground() {
   const pathname = usePathname();
   const isHome = pathname === "/";
 
+  const [src, setSrc] = useState("/assets/images/desktop-07.jpeg");
+
+  useEffect(() => {
+    const update = () => setSrc(pickSrc(window.innerWidth));
+    update();
+    window.addEventListener("resize", update, { passive: true });
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   if (!isHome) return null;
 
   return (
     <div className="absolute inset-x-0 top-0 z-0 overflow-hidden">
-      <div className="relative h-[720px] sm:h-[520px] lg:h-[600px]">
-        <div className="hidden lg:block h-full">
-          <Image
-            src="/assets/images/final.jpeg"
-            alt="Hero background desktop"
-            fill
-            priority
-            className="object-cover"
-          />
-        </div>
-
-        <div className="hidden sm:block lg:hidden h-full">
-          <Image
-            src="/assets/images/final-t.jpeg"
-            alt="Hero background tablet"
-            fill
-            priority
-            className="object-cover"
-          />
-        </div>
-
-        <div className="block sm:hidden h-full">
-          <Image
-            src="/assets/images/final-m.jpeg"
-            alt="Hero background mobile"
-            fill
-            priority
-            className="object-cover"
-          />
-        </div>
-
-        {/* dark overlay for readability */}
-        <div className="absolute inset-0 bg-black/40" />
+      {/* + header height so background reaches the exact bottom of the hero */}
+      <div className="relative h-[calc(720px+64px)] sm:h-[calc(520px+64px)] lg:h-[calc(600px+64px)]">
+        <Image
+          src={src}
+          alt="Hero background"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        {/* No overlay => real image colors */}
       </div>
     </div>
   );

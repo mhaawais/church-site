@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import {
   FiMenu,
@@ -33,6 +33,11 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  // For outside-click close
+  const menuPanelRef = useRef<HTMLDivElement | null>(null);
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+
+  // Track scroll for header styling
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
     onScroll();
@@ -40,9 +45,49 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close menu on route change
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  // ✅ Stop background scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+  // ✅ ESC closes menu
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+
+    if (open) window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
+  // ✅ Click outside closes menu (when open)
+  useEffect(() => {
+    const onMouseDown = (e: MouseEvent) => {
+      if (!open) return;
+
+      const target = e.target as Node;
+      const panel = menuPanelRef.current;
+      const button = menuButtonRef.current;
+
+      const clickedInsidePanel = panel?.contains(target);
+      const clickedButton = button?.contains(target);
+
+      if (!clickedInsidePanel && !clickedButton) {
+        setOpen(false);
+      }
+    };
+
+    if (open) document.addEventListener("mousedown", onMouseDown);
+    return () => document.removeEventListener("mousedown", onMouseDown);
+  }, [open]);
 
   return (
     <header
@@ -62,8 +107,9 @@ export default function Header() {
                 src="/assets/logo/Author-logo.jpg"
                 alt="Author Logo"
                 fill
-                className="object-cover"
                 priority
+                sizes="36px"
+                className="object-cover"
               />
             </div>
 
@@ -108,6 +154,7 @@ export default function Header() {
                         : "bg-slate-100 text-slate-900"
                       : "",
                   ].join(" ")}
+                  aria-current={active ? "page" : undefined}
                 >
                   <Icon className="text-base opacity-90" />
                   {item.label}
@@ -118,7 +165,7 @@ export default function Header() {
 
           {/* CTA + Mobile Toggle */}
           <div className="flex items-center gap-3">
-            {/* Use <a> for external links */}
+            {/* External CTA */}
             <a
               href={AMAZON_STORE_URL}
               target="_blank"
@@ -133,7 +180,9 @@ export default function Header() {
               Get the Books <FiArrowRight />
             </a>
 
+            {/* Mobile menu button */}
             <button
+              ref={menuButtonRef}
               onClick={() => setOpen((v) => !v)}
               className={[
                 "lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full transition",
@@ -142,56 +191,62 @@ export default function Header() {
                   : "bg-slate-100 text-slate-900 hover:bg-slate-200",
               ].join(" ")}
               aria-label="Toggle menu"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
             >
-              {open ? (
-                <FiX className="text-xl" />
-              ) : (
-                <FiMenu className="text-xl" />
-              )}
+              {open ? <FiX className="text-xl" /> : <FiMenu className="text-xl" />}
             </button>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {/* {open && (
-        <div className="lg:hidden border-t border-black/5 bg-white/95 backdrop-blur"> */}
       {open && (
-        <div className="lg:hidden fixed top-16 left-0 right-0 z-40 border-t border-black/5 bg-white/95">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4">
-            <div className="grid gap-2">
-              {navItems.map((item) => {
-                const Icon = item.icon;
-                const active = pathname === item.href;
+        <>
+          {/* Optional backdrop (click closes because of outside click handler) */}
+          <div className="lg:hidden fixed inset-0 top-16 bg-black/20 z-30" />
 
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={[
-                      "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition",
-                      active
-                        ? "bg-slate-900 text-white"
-                        : "bg-slate-100 text-slate-900 hover:bg-slate-200",
-                    ].join(" ")}
-                  >
-                    <Icon className="text-lg" />
-                    {item.label}
-                  </Link>
-                );
-              })}
+          <div
+            id="mobile-menu"
+            ref={menuPanelRef}
+            className="lg:hidden fixed top-16 left-0 right-0 z-40 border-t border-black/5 bg-white/95 backdrop-blur"
+          >
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 py-4">
+              <div className="grid gap-2">
+                {navItems.map((item) => {
+                  const Icon = item.icon;
+                  const active = pathname === item.href;
 
-              <a
-                href={AMAZON_STORE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800 transition"
-              >
-                Get the Books <FiArrowRight />
-              </a>
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={[
+                        "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition",
+                        active
+                          ? "bg-slate-900 text-white"
+                          : "bg-slate-100 text-slate-900 hover:bg-slate-200",
+                      ].join(" ")}
+                      aria-current={active ? "page" : undefined}
+                    >
+                      <Icon className="text-lg" />
+                      {item.label}
+                    </Link>
+                  );
+                })}
+
+                <a
+                  href={AMAZON_STORE_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-flex items-center justify-center gap-2 rounded-2xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-800 transition"
+                >
+                  Get the Books <FiArrowRight />
+                </a>
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );
