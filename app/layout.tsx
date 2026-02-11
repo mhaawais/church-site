@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-   <html lang="en">
+   <html lang="en" id="top">
   <body className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-black text-white antialiased`}>
     <div className="relative min-h-screen">
       <HomeTopBackground />
