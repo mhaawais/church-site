@@ -69,14 +69,14 @@ const onlinePlatforms = [
     link: "https://www.facebook.com/share/1GYYFAFmX2/",
     label: "Follow on Facebook",
   },
-  {
-    icon: FiVideo,
-    title: "Zoom Meetings",
-    description:
-      "Connect with us directly via Zoom for Bible studies and prayer meetings.",
-    link: "https://us02web.zoom.us/j/2409941414?pwd=SHAzL1kwTmcyYm1PdkdzNVNLNUZ6dz09",
-    label: "Join on Zoom",
-  },
+  // {
+  //   icon: FiVideo,
+  //   title: "Zoom Meetings",
+  //   description:
+  //     "Connect with us directly via Zoom for Bible studies and prayer meetings.",
+  //   link: "https://us02web.zoom.us/j/2409941414?pwd=SHAzL1kwTmcyYm1PdkdzNVNLNUZ6dz09",
+  //   label: "Join on Zoom",
+  // },
 ];
 
 export default function EventsContent() {
@@ -209,7 +209,7 @@ export default function EventsContent() {
             </p>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6">
             {onlinePlatforms.map((platform, index) => {
               const Icon = platform.icon;
               return (
